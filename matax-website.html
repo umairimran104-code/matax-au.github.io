@@ -1,0 +1,964 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>MATAX | Accounting & Tax Specialists</title>
+<meta name="description" content="MATAX helps individuals and small businesses with tax returns, BAS, bookkeeping, and financial advisory. Melbourne, Australia."/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --red: #C41230;
+    --red-dark: #9a0e26;
+    --black: #0d0d0d;
+    --dark: #141414;
+    --dark2: #1e1e1e;
+    --dark3: #2a2a2a;
+    --white: #f5f4f0;
+    --grey: #888;
+    --light: #f0eeea;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 400;
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 5vw;
+    height: 70px;
+    background: rgba(13,13,13,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(196,18,48,0.15);
+  }
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem;
+    font-weight: 900;
+    letter-spacing: 0.12em;
+    color: var(--white);
+  }
+  .nav-logo span { color: var(--red); }
+  .nav-links { display: flex; gap: 2.2rem; list-style: none; }
+  .nav-links a {
+    color: rgba(245,244,240,0.7);
+    text-decoration: none;
+    font-size: 0.88rem;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--red); }
+  .nav-cta {
+    background: var(--red);
+    color: var(--white) !important;
+    padding: 0.5rem 1.3rem;
+    border-radius: 3px;
+    transition: background 0.2s !important;
+  }
+  .nav-cta:hover { background: var(--red-dark) !important; color: var(--white) !important; }
+  .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+  .hamburger span { display: block; width: 24px; height: 2px; background: var(--white); transition: all 0.3s; }
+
+  /* ── HERO ── */
+  #hero {
+    min-height: 100vh;
+    display: flex; align-items: center; justify-content: center;
+    padding: 120px 5vw 80px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 80% 60% at 60% 40%, rgba(196,18,48,0.12) 0%, transparent 70%),
+                linear-gradient(160deg, #0d0d0d 0%, #141414 100%);
+  }
+  .hero-grid {
+    position: absolute; inset: 0; opacity: 0.04;
+    background-image: linear-gradient(var(--red) 1px, transparent 1px),
+                      linear-gradient(90deg, var(--red) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+  .hero-content {
+    position: relative; z-index: 2;
+    max-width: 900px;
+    text-align: center;
+  }
+  .hero-tag {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--red);
+    border: 1px solid rgba(196,18,48,0.4);
+    padding: 0.35rem 1rem;
+    border-radius: 2px;
+    margin-bottom: 2rem;
+    animation: fadeUp 0.6s ease both;
+  }
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3rem, 8vw, 6.5rem);
+    font-weight: 900;
+    line-height: 1.0;
+    letter-spacing: -0.02em;
+    color: var(--white);
+    animation: fadeUp 0.7s 0.1s ease both;
+  }
+  .hero-title em { color: var(--red); font-style: normal; }
+  .hero-sub {
+    margin-top: 1.8rem;
+    font-size: clamp(1rem, 2vw, 1.2rem);
+    font-weight: 300;
+    color: rgba(245,244,240,0.65);
+    line-height: 1.7;
+    max-width: 600px;
+    margin-left: auto; margin-right: auto;
+    animation: fadeUp 0.7s 0.2s ease both;
+  }
+  .hero-btns {
+    margin-top: 2.8rem;
+    display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;
+    animation: fadeUp 0.7s 0.3s ease both;
+  }
+  .btn-primary {
+    background: var(--red);
+    color: var(--white);
+    padding: 0.85rem 2rem;
+    border: none; border-radius: 3px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem; font-weight: 600;
+    cursor: pointer; text-decoration: none;
+    letter-spacing: 0.03em;
+    transition: background 0.2s, transform 0.15s;
+    display: inline-block;
+  }
+  .btn-primary:hover { background: var(--red-dark); transform: translateY(-1px); }
+  .btn-ghost {
+    background: transparent;
+    color: var(--white);
+    padding: 0.85rem 2rem;
+    border: 1px solid rgba(245,244,240,0.3);
+    border-radius: 3px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem; font-weight: 500;
+    cursor: pointer; text-decoration: none;
+    letter-spacing: 0.03em;
+    transition: border-color 0.2s, color 0.2s, transform 0.15s;
+    display: inline-block;
+  }
+  .btn-ghost:hover { border-color: var(--red); color: var(--red); transform: translateY(-1px); }
+  .hero-trust {
+    margin-top: 4rem;
+    display: flex; gap: 2.5rem; justify-content: center; flex-wrap: wrap;
+    animation: fadeUp 0.7s 0.4s ease both;
+  }
+  .trust-item {
+    display: flex; align-items: center; gap: 0.5rem;
+    font-size: 0.82rem; color: rgba(245,244,240,0.5);
+    letter-spacing: 0.04em; text-transform: uppercase;
+  }
+  .trust-item::before { content: '✓'; color: var(--red); font-weight: 700; }
+
+  /* ── SECTIONS SHARED ── */
+  section { padding: 100px 5vw; }
+  .sec-label {
+    font-size: 0.72rem; font-weight: 700; letter-spacing: 0.22em;
+    text-transform: uppercase; color: var(--red);
+    margin-bottom: 1rem;
+  }
+  .sec-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 4.5vw, 3.2rem);
+    font-weight: 700; line-height: 1.15;
+    color: var(--white);
+  }
+  .sec-sub {
+    margin-top: 1rem;
+    font-size: 1.05rem; color: rgba(245,244,240,0.55);
+    line-height: 1.7; max-width: 560px;
+    font-weight: 300;
+  }
+  .inner { max-width: 1160px; margin: 0 auto; }
+
+  /* ── SERVICES ── */
+  #services { background: var(--dark); }
+  .services-head { margin-bottom: 4rem; }
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.5px;
+    background: rgba(196,18,48,0.12);
+    border: 1px solid rgba(196,18,48,0.12);
+  }
+  .svc-card {
+    background: var(--dark);
+    padding: 2.8rem 2.2rem;
+    transition: background 0.25s;
+    cursor: default;
+  }
+  .svc-card:hover { background: var(--dark2); }
+  .svc-icon {
+    font-size: 2rem; margin-bottom: 1.4rem;
+    display: block;
+  }
+  .svc-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem; font-weight: 700;
+    color: var(--white); margin-bottom: 0.8rem;
+  }
+  .svc-desc {
+    font-size: 0.92rem; color: rgba(245,244,240,0.55);
+    line-height: 1.7; font-weight: 300;
+  }
+  .svc-price {
+    margin-top: 1.5rem;
+    font-size: 0.78rem; font-weight: 600;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--red);
+  }
+
+  /* ── WHY US ── */
+  #why { background: var(--black); }
+  .why-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem; align-items: center;
+    margin-top: 4rem;
+  }
+  .why-points { display: flex; flex-direction: column; gap: 2rem; }
+  .why-point { display: flex; gap: 1.2rem; align-items: flex-start; }
+  .why-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5rem; font-weight: 900;
+    color: rgba(196,18,48,0.2);
+    line-height: 1; min-width: 48px;
+    transition: color 0.3s;
+  }
+  .why-point:hover .why-num { color: var(--red); }
+  .why-point-title {
+    font-size: 1.05rem; font-weight: 600;
+    color: var(--white); margin-bottom: 0.4rem;
+  }
+  .why-point-text {
+    font-size: 0.9rem; color: rgba(245,244,240,0.5);
+    line-height: 1.7; font-weight: 300;
+  }
+  .why-stats {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 1.5px;
+    background: rgba(196,18,48,0.1);
+  }
+  .stat-box {
+    background: var(--dark);
+    padding: 2.5rem 2rem; text-align: center;
+  }
+  .stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 3rem; font-weight: 900;
+    color: var(--red); display: block;
+  }
+  .stat-label {
+    font-size: 0.8rem; color: rgba(245,244,240,0.45);
+    text-transform: uppercase; letter-spacing: 0.1em;
+    margin-top: 0.4rem;
+  }
+
+  /* ── PROCESS ── */
+  #process { background: var(--dark); }
+  .process-steps {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 0;
+    margin-top: 4rem;
+    position: relative;
+  }
+  .process-step {
+    padding: 2.5rem 2rem;
+    border-left: 1px solid rgba(196,18,48,0.15);
+    position: relative;
+  }
+  .process-step:first-child { border-left: none; }
+  .step-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 0.75rem; font-weight: 700;
+    letter-spacing: 0.15em; color: var(--red);
+    margin-bottom: 1.2rem;
+  }
+  .step-title {
+    font-size: 1.05rem; font-weight: 600;
+    color: var(--white); margin-bottom: 0.6rem;
+  }
+  .step-text {
+    font-size: 0.88rem; color: rgba(245,244,240,0.5);
+    line-height: 1.7; font-weight: 300;
+  }
+
+  /* ── FAQ ── */
+  #faq { background: var(--black); }
+  .faq-wrap { margin-top: 3.5rem; max-width: 760px; }
+  .faq-item {
+    border-bottom: 1px solid rgba(245,244,240,0.08);
+    overflow: hidden;
+  }
+  .faq-q {
+    width: 100%; background: none; border: none;
+    color: var(--white); font-family: 'DM Sans', sans-serif;
+    font-size: 1rem; font-weight: 500;
+    text-align: left; cursor: pointer;
+    padding: 1.5rem 0;
+    display: flex; justify-content: space-between; align-items: center;
+    gap: 1rem;
+  }
+  .faq-q:hover { color: var(--red); }
+  .faq-icon {
+    font-size: 1.4rem; color: var(--red);
+    transition: transform 0.3s;
+    flex-shrink: 0; line-height: 1;
+  }
+  .faq-a {
+    font-size: 0.92rem; color: rgba(245,244,240,0.55);
+    line-height: 1.75; font-weight: 300;
+    max-height: 0; overflow: hidden;
+    transition: max-height 0.4s ease, padding 0.3s;
+    padding-bottom: 0;
+  }
+  .faq-item.open .faq-a { max-height: 300px; padding-bottom: 1.5rem; }
+  .faq-item.open .faq-icon { transform: rotate(45deg); }
+
+  /* ── TESTIMONIALS ── */
+  #testimonials { background: var(--dark); }
+  .testi-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem; margin-top: 3.5rem;
+  }
+  .testi-card {
+    background: var(--dark2);
+    border: 1px solid rgba(196,18,48,0.1);
+    padding: 2.2rem;
+    border-radius: 2px;
+    transition: border-color 0.25s;
+  }
+  .testi-card:hover { border-color: rgba(196,18,48,0.35); }
+  .testi-stars { color: var(--red); font-size: 0.9rem; margin-bottom: 1rem; letter-spacing: 2px; }
+  .testi-text {
+    font-size: 0.95rem; color: rgba(245,244,240,0.7);
+    line-height: 1.75; font-style: italic; font-weight: 300;
+    margin-bottom: 1.4rem;
+  }
+  .testi-author { font-size: 0.82rem; font-weight: 600; color: var(--white); }
+  .testi-role { font-size: 0.78rem; color: var(--grey); margin-top: 0.2rem; }
+
+  /* ── CONTACT ── */
+  #contact { background: var(--black); }
+  .contact-grid {
+    display: grid; grid-template-columns: 1fr 1.4fr;
+    gap: 5rem; margin-top: 4rem; align-items: start;
+  }
+  .contact-info h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem; margin-bottom: 1rem;
+    color: var(--white);
+  }
+  .contact-info p {
+    font-size: 0.9rem; color: rgba(245,244,240,0.5);
+    line-height: 1.75; font-weight: 300; margin-bottom: 2rem;
+  }
+  .contact-detail {
+    display: flex; gap: 0.8rem; align-items: flex-start;
+    margin-bottom: 1.2rem;
+  }
+  .contact-detail-icon {
+    color: var(--red); font-size: 1.1rem; margin-top: 1px; flex-shrink: 0;
+  }
+  .contact-detail-text { font-size: 0.9rem; color: rgba(245,244,240,0.6); line-height: 1.5; }
+  .contact-detail-text strong { color: var(--white); display: block; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.15rem; }
+
+  .form-wrap {
+    background: var(--dark);
+    border: 1px solid rgba(196,18,48,0.12);
+    padding: 2.8rem;
+  }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .form-group { margin-bottom: 1.2rem; }
+  .form-group label {
+    display: block; font-size: 0.75rem; font-weight: 600;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: rgba(245,244,240,0.45); margin-bottom: 0.5rem;
+  }
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    width: 100%;
+    background: var(--dark2);
+    border: 1px solid rgba(245,244,240,0.08);
+    color: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.92rem; font-weight: 400;
+    padding: 0.85rem 1rem;
+    border-radius: 2px;
+    outline: none;
+    transition: border-color 0.2s;
+    appearance: none;
+  }
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus {
+    border-color: var(--red);
+  }
+  .form-group select option { background: var(--dark2); }
+  .form-group textarea { resize: vertical; min-height: 110px; }
+  .form-submit {
+    width: 100%;
+    background: var(--red);
+    color: var(--white);
+    border: none; border-radius: 2px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem; font-weight: 600;
+    padding: 1rem;
+    cursor: pointer; margin-top: 0.5rem;
+    letter-spacing: 0.05em;
+    transition: background 0.2s;
+  }
+  .form-submit:hover { background: var(--red-dark); }
+  .form-success {
+    display: none; text-align: center; padding: 3rem 2rem;
+  }
+  .form-success h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem; color: var(--white); margin-bottom: 0.8rem;
+  }
+  .form-success p { color: rgba(245,244,240,0.55); font-size: 0.9rem; }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--dark);
+    border-top: 1px solid rgba(196,18,48,0.15);
+    padding: 60px 5vw 30px;
+  }
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr;
+    gap: 3rem; margin-bottom: 3rem;
+  }
+  .footer-brand-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem; font-weight: 900;
+    letter-spacing: 0.1em; color: var(--white);
+    margin-bottom: 0.8rem;
+  }
+  .footer-brand-name span { color: var(--red); }
+  .footer-brand-text {
+    font-size: 0.85rem; color: rgba(245,244,240,0.35);
+    line-height: 1.7; max-width: 280px;
+  }
+  .footer-col-title {
+    font-size: 0.72rem; font-weight: 700;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--red); margin-bottom: 1.2rem;
+  }
+  .footer-links { list-style: none; display: flex; flex-direction: column; gap: 0.7rem; }
+  .footer-links a {
+    font-size: 0.88rem; color: rgba(245,244,240,0.45);
+    text-decoration: none; transition: color 0.2s;
+  }
+  .footer-links a:hover { color: var(--white); }
+  .footer-bottom {
+    border-top: 1px solid rgba(245,244,240,0.06);
+    padding-top: 1.5rem;
+    display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 1rem;
+  }
+  .footer-copy { font-size: 0.78rem; color: rgba(245,244,240,0.25); }
+  .footer-shah { font-size: 0.75rem; color: rgba(245,244,240,0.18); }
+
+  /* ── CTA BANNER ── */
+  #cta-banner {
+    background: var(--red);
+    padding: 70px 5vw;
+    text-align: center;
+  }
+  .cta-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.8rem, 4vw, 3rem);
+    font-weight: 700; color: var(--white);
+    margin-bottom: 1rem;
+  }
+  .cta-sub {
+    font-size: 1rem; color: rgba(245,244,240,0.75);
+    margin-bottom: 2rem; font-weight: 300;
+  }
+  .btn-white {
+    background: var(--white); color: var(--red);
+    padding: 0.9rem 2.2rem; border-radius: 3px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem; font-weight: 700;
+    text-decoration: none; display: inline-block;
+    transition: transform 0.15s, box-shadow 0.2s;
+  }
+  .btn-white:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.3); }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── MOBILE ── */
+  @media (max-width: 768px) {
+    .nav-links { display: none; flex-direction: column; position: absolute; top: 70px; left: 0; right: 0; background: var(--dark); padding: 2rem 5vw; gap: 1.5rem; border-bottom: 1px solid rgba(196,18,48,0.15); }
+    .nav-links.open { display: flex; }
+    .hamburger { display: flex; }
+    .why-grid { grid-template-columns: 1fr; gap: 3rem; }
+    .contact-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+    .footer-grid { grid-template-columns: 1fr; gap: 2rem; }
+    .form-row { grid-template-columns: 1fr; }
+    .why-stats { display: grid; grid-template-columns: 1fr 1fr; }
+    .process-steps { grid-template-columns: 1fr; }
+    .process-step { border-left: none; border-top: 1px solid rgba(196,18,48,0.15); }
+    .process-step:first-child { border-top: none; }
+    .footer-bottom { flex-direction: column; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">MAT<span>AX</span></div>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#why">Why Us</a></li>
+    <li><a href="#faq">FAQ</a></li>
+    <li><a href="#contact" class="nav-cta">Book a Call</a></li>
+  </ul>
+  <div class="hamburger" id="hamburger" onclick="toggleNav()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-content">
+    <div class="hero-tag">Melbourne, Australia · Registered Tax Agents</div>
+    <h1 class="hero-title">Smart Accounting.<br><em>Real Results.</em></h1>
+    <p class="hero-sub">MATAX helps individuals and small businesses take control of their finances — from tax returns to business growth.</p>
+    <div class="hero-btns">
+      <a href="#contact" class="btn-primary">Book Free Consultation</a>
+      <a href="#services" class="btn-ghost">See Our Services</a>
+    </div>
+    <div class="hero-trust">
+      <div class="trust-item">Registered Tax Agent</div>
+      <div class="trust-item">Fixed Price Packages</div>
+      <div class="trust-item">Same-Day Response</div>
+      <div class="trust-item">Serving Clients Nationwide</div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="inner">
+    <div class="services-head">
+      <div class="sec-label">What We Do</div>
+      <h2 class="sec-title">Services Built for<br>Real People & Businesses</h2>
+      <p class="sec-sub">Straightforward, fixed-price services with no jargon and no surprise invoices.</p>
+    </div>
+    <div class="services-grid">
+      <div class="svc-card">
+        <span class="svc-icon">📋</span>
+        <div class="svc-name">Tax Returns</div>
+        <p class="svc-desc">Individual and business tax returns lodged accurately and on time. We maximise your deductions and keep you compliant with the ATO.</p>
+        <div class="svc-price">From $99 → Individual</div>
+      </div>
+      <div class="svc-card">
+        <span class="svc-icon">📊</span>
+        <div class="svc-name">BAS & GST</div>
+        <p class="svc-desc">We handle your quarterly Business Activity Statements so you stay compliant without the stress. Lodge correctly, every time.</p>
+        <div class="svc-price">Quarterly packages available</div>
+      </div>
+      <div class="svc-card">
+        <span class="svc-icon">📒</span>
+        <div class="svc-name">Bookkeeping</div>
+        <p class="svc-desc">Clean books, clear picture. We keep your finances organised year-round so tax time is never a scramble.</p>
+        <div class="svc-price">Monthly retainer plans</div>
+      </div>
+      <div class="svc-card">
+        <span class="svc-icon">🚀</span>
+        <div class="svc-name">Business Advisory</div>
+        <p class="svc-desc">Cash flow planning, budgeting, and growth strategy tailored to your business. We're more than your accountant — we're your business partner.</p>
+        <div class="svc-price">Tailored pricing</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY US -->
+<section id="why">
+  <div class="inner">
+    <div class="sec-label">Why MATAX</div>
+    <h2 class="sec-title">Accountants Who Actually<br>Work For You</h2>
+    <div class="why-grid">
+      <div class="why-points">
+        <div class="why-point">
+          <div class="why-num">01</div>
+          <div>
+            <div class="why-point-title">Proactive, Not Reactive</div>
+            <p class="why-point-text">We reach out before problems arise — deadline reminders, tax saving opportunities, and financial insights sent to you throughout the year.</p>
+          </div>
+        </div>
+        <div class="why-point">
+          <div class="why-num">02</div>
+          <div>
+            <div class="why-point-title">Fixed Prices, No Surprises</div>
+            <p class="why-point-text">You know the cost upfront. No hourly billing, no surprise invoices. Transparent pricing that respects your budget.</p>
+          </div>
+        </div>
+        <div class="why-point">
+          <div class="why-num">03</div>
+          <div>
+            <div class="why-point-title">Plain English, Always</div>
+            <p class="why-point-text">We translate complex tax and accounting concepts into language you actually understand. No jargon, no confusion.</p>
+          </div>
+        </div>
+        <div class="why-point">
+          <div class="why-num">04</div>
+          <div>
+            <div class="why-point-title">Same-Day Response</div>
+            <p class="why-point-text">Every enquiry gets a same-day response during business hours. Because your time is as valuable as ours.</p>
+          </div>
+        </div>
+      </div>
+      <div class="why-stats">
+        <div class="stat-box">
+          <span class="stat-num">500+</span>
+          <div class="stat-label">Returns Lodged</div>
+        </div>
+        <div class="stat-box">
+          <span class="stat-num">98%</span>
+          <div class="stat-label">Client Satisfaction</div>
+        </div>
+        <div class="stat-box">
+          <span class="stat-num">$2M+</span>
+          <div class="stat-label">Tax Savings Found</div>
+        </div>
+        <div class="stat-box">
+          <span class="stat-num">24hr</span>
+          <div class="stat-label">Avg Response Time</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section id="process">
+  <div class="inner">
+    <div class="sec-label">How It Works</div>
+    <h2 class="sec-title">From Enquiry to Lodgement<br>in 4 Simple Steps</h2>
+    <div class="process-steps">
+      <div class="process-step">
+        <div class="step-num">STEP 01</div>
+        <div class="step-title">Book a Free Call</div>
+        <p class="step-text">Tell us about your situation. We'll assess your needs and recommend the right service with clear pricing — no obligation.</p>
+      </div>
+      <div class="process-step">
+        <div class="step-num">STEP 02</div>
+        <div class="step-title">Send Your Documents</div>
+        <p class="step-text">We'll give you a simple checklist of what we need. You can send everything digitally — no paper, no in-person visits required.</p>
+      </div>
+      <div class="process-step">
+        <div class="step-num">STEP 03</div>
+        <div class="step-title">We Handle Everything</div>
+        <p class="step-text">Our team prepares everything accurately. We'll check in if we need anything and explain every line before you sign off.</p>
+      </div>
+      <div class="process-step">
+        <div class="step-num">STEP 04</div>
+        <div class="step-title">Lodged & Done</div>
+        <p class="step-text">We lodge with the ATO and send you confirmation. Most refunds land within 2 weeks. We'll follow up so you're never left waiting.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq">
+  <div class="inner">
+    <div class="sec-label">FAQ</div>
+    <h2 class="sec-title">Common Questions</h2>
+    <div class="faq-wrap">
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          How much does a tax return cost?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a">Individual tax returns start from $99 depending on complexity. Business returns vary based on structure and size. We give you a fixed price upfront — no surprises.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          Do I need to come into an office?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a">Not at all. We work 100% digitally. You can send documents via email or our secure portal, and we communicate via phone, email, or video call — whatever suits you.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          When is the tax return deadline in Australia?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a">The standard deadline for individuals is 31 October each year. However, registered tax agents like MATAX can lodge returns for clients after this date with extended deadlines — another reason to use a professional.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          What documents do I need for my tax return?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a">Typically: your PAYG payment summaries, bank interest statements, any investment income, receipts for work-related deductions, and your previous return. We'll send you a tailored checklist after your first call.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          Can you help with my small business BAS?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a">Absolutely. We handle BAS lodgement for sole traders, partnerships, companies, and trusts. We offer quarterly retainer packages so you're always on time and always compliant.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="testimonials">
+  <div class="inner">
+    <div class="sec-label">Client Stories</div>
+    <h2 class="sec-title">What Our Clients Say</h2>
+    <div class="testi-grid">
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-text">"MATAX saved us thousands at tax time and actually explained everything clearly. First time I've ever understood my own finances."</p>
+        <div class="testi-author">Sarah M.</div>
+        <div class="testi-role">Café Owner, Melbourne</div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-text">"Finally an accountant who gets back to you the same day. Used to wait weeks with my old firm. MATAX is in a different league."</p>
+        <div class="testi-author">James T.</div>
+        <div class="testi-role">Electrician, Brisbane</div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-text">"Switched from our old accountant and wished we did it sooner. Fixed pricing means no bill shock and the work is always done on time."</p>
+        <div class="testi-author">Linda K.</div>
+        <div class="testi-role">Online Retailer, Sydney</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA BANNER -->
+<div id="cta-banner">
+  <div class="inner">
+    <h2 class="cta-title">Not sure where to start?</h2>
+    <p class="cta-sub">Book a free 20-minute Tax Health Check. We'll identify one thing you can do right now to save money or reduce stress.</p>
+    <a href="#contact" class="btn-white">Book Your Free Call →</a>
+  </div>
+</div>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="inner">
+    <div class="contact-grid">
+      <div class="contact-info">
+        <div class="sec-label">Get In Touch</div>
+        <h2 class="sec-title">Let's Talk</h2>
+        <p>Book a free consultation or send us a message. We'll get back to you the same business day.</p>
+        <div class="contact-detail">
+          <div class="contact-detail-icon">✉</div>
+          <div class="contact-detail-text">
+            <strong>Email</strong>
+            imran@matax.com.au
+          </div>
+        </div>
+        <div class="contact-detail">
+          <div class="contact-detail-icon">📍</div>
+          <div class="contact-detail-text">
+            <strong>Location</strong>
+            Melbourne, Australia · Serving clients nationwide
+          </div>
+        </div>
+        <div class="contact-detail">
+          <div class="contact-detail-icon">⏱</div>
+          <div class="contact-detail-text">
+            <strong>Response Time</strong>
+            Same day during business hours
+          </div>
+        </div>
+      </div>
+      <div class="form-wrap">
+        <div id="contact-form">
+          <div class="form-row">
+            <div class="form-group">
+              <label>Full Name *</label>
+              <input type="text" id="cn" placeholder="Your name" required/>
+            </div>
+            <div class="form-group">
+              <label>Email Address *</label>
+              <input type="email" id="ce" placeholder="your@email.com" required/>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Phone Number</label>
+              <input type="tel" id="cp" placeholder="04xx xxx xxx"/>
+            </div>
+            <div class="form-group">
+              <label>I am a *</label>
+              <select id="ct" required>
+                <option value="">Select...</option>
+                <option>Individual</option>
+                <option>Sole Trader</option>
+                <option>Small Business</option>
+                <option>Company / Trust</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>I need help with *</label>
+            <select id="cs" required>
+              <option value="">Select a service...</option>
+              <option>Individual Tax Return</option>
+              <option>Business Tax Return</option>
+              <option>BAS & GST</option>
+              <option>Bookkeeping</option>
+              <option>Business Advisory</option>
+              <option>Not Sure — Need Advice</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Message (optional)</label>
+            <textarea id="cm" placeholder="Tell us a bit more about your situation..."></textarea>
+          </div>
+          <button class="form-submit" onclick="submitForm()">Send My Enquiry →</button>
+        </div>
+        <div class="form-success" id="form-success">
+          <div style="font-size:2.5rem;margin-bottom:1rem;">✅</div>
+          <h3>Enquiry Received!</h3>
+          <p>Thanks for reaching out. We'll get back to you within the same business day at the email you provided.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="inner">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand-name">MAT<span>AX</span></div>
+        <p class="footer-brand-text">Accounting & Tax Specialists serving individuals and small businesses across Australia. Registered Tax Agent.</p>
+      </div>
+      <div>
+        <div class="footer-col-title">Services</div>
+        <ul class="footer-links">
+          <li><a href="#services">Tax Returns</a></li>
+          <li><a href="#services">BAS & GST</a></li>
+          <li><a href="#services">Bookkeeping</a></li>
+          <li><a href="#services">Business Advisory</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Company</div>
+        <ul class="footer-links">
+          <li><a href="#why">Why MATAX</a></li>
+          <li><a href="#process">How It Works</a></li>
+          <li><a href="#faq">FAQ</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-copy">© 2025 MATAX. All rights reserved. · Melbourne, Australia</div>
+      <div class="footer-shah">Website by SHAH Solutions</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // NAV
+  function toggleNav() {
+    document.getElementById('navLinks').classList.toggle('open');
+  }
+  // Close nav on link click
+  document.querySelectorAll('.nav-links a').forEach(a => {
+    a.addEventListener('click', () => document.getElementById('navLinks').classList.remove('open'));
+  });
+
+  // FAQ
+  function toggleFaq(btn) {
+    const item = btn.closest('.faq-item');
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
+    if (!isOpen) item.classList.add('open');
+  }
+
+  // FORM SUBMIT
+  function submitForm() {
+    const name = document.getElementById('cn').value.trim();
+    const email = document.getElementById('ce').value.trim();
+    const type = document.getElementById('ct').value;
+    const service = document.getElementById('cs').value;
+
+    if (!name || !email || !type || !service) {
+      alert('Please fill in all required fields.');
+      return;
+    }
+
+    const data = {
+      name, email,
+      phone: document.getElementById('cp').value,
+      clientType: type,
+      service,
+      message: document.getElementById('cm').value,
+      _subject: 'New MATAX Enquiry from ' + name,
+    };
+
+    // ── REPLACE 'YOUR_FORM_ID' with your Formspree form ID ──
+    // Sign up free at formspree.io → create form → copy the ID
+    const FORMSPREE_ID = 'YOUR_FORM_ID';
+
+    if (FORMSPREE_ID === 'YOUR_FORM_ID') {
+      // Demo mode — show success without sending
+      document.getElementById('contact-form').style.display = 'none';
+      document.getElementById('form-success').style.display = 'block';
+      return;
+    }
+
+    fetch('https://formspree.io/f/' + FORMSPREE_ID, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data),
+    })
+    .then(res => {
+      if (res.ok) {
+        document.getElementById('contact-form').style.display = 'none';
+        document.getElementById('form-success').style.display = 'block';
+      } else {
+        alert('Something went wrong. Please email us directly at imran@matax.com.au');
+      }
+    })
+    .catch(() => alert('Could not send. Please email imran@matax.com.au'));
+  }
+</script>
+</body>
+</html>
